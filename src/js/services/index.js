@@ -1,3 +1,4 @@
 module.exports.load = app => {
-    app.factory('homeService', require('./home.service'));
+    app.factory('audioService', require('./audio.service'));
+    app.factory('imageService', require('./image.service'));
 };

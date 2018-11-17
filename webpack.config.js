@@ -14,6 +14,24 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.(wav|mp3)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                    }
+                }],
+            },
+            {
+                test: /\.(jpe?g|gif|png|svg|woff|ttf)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[path][name].[ext]',
+                    }
+                }],
+            },
+            {
                 test: /\.js$/,
                 use: [
                     {
@@ -29,18 +47,6 @@ module.exports = {
                 use: extractPlugin.extract({
                     use: ['css-loader', 'sass-loader']
                 })
-            },
-            {
-                test: /\.(wav|mp3)$/,
-                use: [{
-                    loader: 'file-loader',
-                }],
-            },
-            {
-                test: /\.(jpe?g|gif|png|svg|woff|ttf)$/,
-                use: [{
-                    loader: 'file-loader'
-                }],
             },
             {
                 test: /\.html$/,
