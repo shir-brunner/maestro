@@ -3,19 +3,20 @@ const AudioChannel = require('./audio_channel');
 
 module.exports = [function () {
     let audioService = {};
-    audioService.loadAudio = channels => {
+    audioService.loadAudio = instruments => {
         let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-        return Promise.map(channels, channel => {
+        return Promise.map(instruments, instrument => {
             return new Promise(function(resolve, reject) {
                 let request = new XMLHttpRequest();
-                request.open('GET', channel.musicPath, true);
+                request.open('GET', instrument.musicPath, true);
                 request.responseType = 'arraybuffer';
 
                 request.onload = function() {
                     audioContext.decodeAudioData(request.response, function(buffer) {
-                        resolve(new AudioChannel(channel.name, buffer, audioContext));
-                    }, function() { reject(channel.musicPath); });
+                        instrument.audioChannel = new AudioChannel(buffer, audioContext);
+                        resolve();
+                    }, function() { reject(instrument.musicPath); });
                 };
 
                 request.send();

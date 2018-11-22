@@ -3,6 +3,8 @@
   height: 300px;
   background: url('../img/vocal1.png');
   animation: vocal1 2s steps(152) infinite;
+  left: 950px;
+  top: 400px;
 }
 
 @keyframes vocal1 {
@@ -14,6 +16,8 @@
   height: 300px;
   background: url('../img/vocal2.png');
   animation: vocal2 2s steps(152) infinite;
+  left: 720px;
+  top: 400px;
 }
 
 @keyframes vocal2 {
@@ -25,6 +29,8 @@
   height: 300px;
   background: url('../img/vocal3.png');
   animation: vocal3 2s steps(152) infinite;
+  left: 480px;
+  top: 400px;
 }
 
 @keyframes vocal3 {
@@ -36,6 +42,8 @@
   height: 162px;
   background: url('../img/acoustic_guitar.png');
   animation: acoustic_guitar 2s steps(152) infinite;
+  left: 1220px;
+  top: 480px;
 }
 
 @keyframes acoustic_guitar {
@@ -47,6 +55,8 @@
   height: 300px;
   background: url('../img/bass.png');
   animation: bass 2s steps(154) infinite;
+  left: 1330px;
+  top: 70px;
 }
 
 @keyframes bass {
@@ -58,6 +68,8 @@
   height: 298px;
   background: url('../img/drums.png');
   animation: drums 2s steps(151) infinite;
+  left: 950px;
+  top: 70px;
 }
 
 @keyframes drums {
@@ -69,6 +81,8 @@
   height: 300px;
   background: url('../img/electric_guitar.png');
   animation: electric_guitar 2s steps(148) infinite;
+  left: 1570px;
+  top: 350px;
 }
 
 @keyframes electric_guitar {
@@ -80,6 +94,8 @@
   height: 300px;
   background: url('../img/strings.png');
   animation: strings 2s steps(148) infinite;
+  left: 230px;
+  top: 70px;
 }
 
 @keyframes strings {
@@ -91,6 +107,8 @@
   height: 94px;
   background: url('../img/melodica.png');
   animation: melodica 3s steps(495) infinite;
+  left: 150px;
+  top: 530px;
 }
 
 @keyframes melodica {

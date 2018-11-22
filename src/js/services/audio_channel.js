@@ -1,6 +1,5 @@
 module.exports = class AudioChannel {
-    constructor(name, buffer, audioContext) {
-        this.name = name;
+    constructor(buffer, audioContext) {
         this.buffer = buffer;
         this.audioContext = audioContext;
         this.sourceNode = null;
@@ -39,7 +38,7 @@ module.exports = class AudioChannel {
 
         this.startedAt = this.audioContext.currentTime - offset;
 
-        this.sourceNode.onended = () => alert('ended');
+        this.sourceNode.onended = () => {};
 
         this.setIsMuted(this.isMuted);
     }

@@ -5,10 +5,20 @@
 @import 'instruments';
 
 body {
-  background: limegreen;
+  background: url('../img/background.jpg');
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
 }
 
 .instrument {
-  transform: scale(0.5, 0.5);
   display: inline-block;
+  animation-play-state: paused;
+  cursor: pointer;
+
+  &.playing {
+    animation-play-state: running;
+  }
+
+  position: absolute;
 }
