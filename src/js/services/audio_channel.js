@@ -1,3 +1,5 @@
+const config = require('../../config');
+
 module.exports = class AudioChannel {
     constructor(buffer, audioContext) {
         this.buffer = buffer;
@@ -5,8 +7,9 @@ module.exports = class AudioChannel {
         this.sourceNode = null;
         this.gainNode = null;
         this.analyser = null;
-        this.isMuted = false;
+        this.muted = true;
         this.audible = false;
+        this.autoMuted = false;
     }
 
     play() {
@@ -24,6 +27,11 @@ module.exports = class AudioChannel {
 
             let db = 20 * Math.log(Math.max(max, Math.pow(10, -72 / 20))) / Math.LN10;
             this.audible = db > -40;
+
+            if(this.audioContext.currentTime <= config.autoplaySeconds && this.muted && this.audible && !this.autoMuted) {
+                this.setMuted(false);
+                this.autoMuted = true;
+            }
         };
 
         this.sourceNode = this.audioContext.createBufferSource();
@@ -37,10 +45,8 @@ module.exports = class AudioChannel {
         this.sourceNode.start(0, 1);
 
         this.startedAt = this.audioContext.currentTime - offset;
-
         this.sourceNode.onended = () => {};
-
-        this.setIsMuted(this.isMuted);
+        this.setMuted(this.muted);
     }
 
     pause() {
@@ -58,14 +64,12 @@ module.exports = class AudioChannel {
 
         this.pausedAt = 0;
         this.startedAt = 0;
-        this.isPlaying = false;
     }
 
-    setIsMuted(bool) {
-        this.isMuted = bool;
+    setMuted(bool) {
+        this.muted = bool;
 
-        if (this.gainNode && this.gainNode.gain) {
-            this.gainNode.gain.value = this.isMuted ? 0 : 1;
-        }
+        if (this.gainNode && this.gainNode.gain)
+            this.gainNode.gain.value = this.muted ? 0 : 1;
     }
 }

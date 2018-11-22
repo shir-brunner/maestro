@@ -1,2 +1,5 @@
-<div ng-repeat="instrument in instruments" class="instrument {{instrument.name}}"
-     ng-class="{'playing': instrument.audioChannel.audible}"></div>
+<div ng-repeat="instrument in instruments" class="instrument {{instrument.name}}" ng-click="toggleMuted(instrument)"
+     ng-class="{'audible': instrument.audioChannel.audible, 'muted': instrument.audioChannel.muted}">
+    <img src="../../img/spot.png" class="spot">
+    <div class="spot"></div>
+</div>

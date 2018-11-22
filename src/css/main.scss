@@ -15,10 +15,27 @@ body {
   display: inline-block;
   animation-play-state: paused;
   cursor: pointer;
+  position: absolute;
 
-  &.playing {
+  &.audible {
     animation-play-state: running;
   }
 
-  position: absolute;
+  &.muted {
+    filter: contrast(40%) brightness(0.15) hue-rotate(-20deg);
+    opacity: 0.7;
+    .spot {
+      display: none !important;
+    }
+  }
+
+  .spot {
+    display: none;
+    width: 200px; height: 100px;
+  }
+
+  .spot:nth-child(1) {
+    display: inline-block;
+    width: 100%;
+  }
 }
