@@ -1,5 +1,16 @@
-<div ng-repeat="instrument in instruments" class="instrument {{instrument.name}}" ng-click="toggleMuted(instrument)"
-     ng-class="{'audible': instrument.audioChannel.audible, 'muted': instrument.audioChannel.muted}">
-    <img src="../../img/spot.png" class="spot">
-    <div class="spot"></div>
+<div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
+     ng-click="toggleMuted(instrument)"
+     ng-class="{'muted': instrument.audioChannel.muted}">
+    <div class="instrument" ng-class="{'audible': instrument.audioChannel.audible}"></div>
+    <div class="spots">
+        <img src="../../img/spot.png" class="spot">
+        <img src="../../img/spot.png" class="spot">
+    </div>
+</div>
+<div ng-hide="audioState === 'loading'">
+    <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
+    <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
+    <div class="timeline">
+        <div class="progress" style="width: {{instruments[0].audioChannel.audioContext.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
+    </div>
 </div>

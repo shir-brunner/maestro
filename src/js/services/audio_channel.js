@@ -13,7 +13,11 @@ module.exports = class AudioChannel {
     }
 
     play() {
-        let offset = this.pausedAt;
+        if(this.sourceNode) {
+            this.audioContext.resume();
+            return;
+        }
+
         this.gainNode = this.audioContext.createGain();
         this.analyser = this.audioContext.createScriptProcessor(0, 1, 1);
         this.analyser.onaudioprocess = e => {
@@ -44,15 +48,13 @@ module.exports = class AudioChannel {
         this.sourceNode.buffer = this.buffer;
         this.sourceNode.start(0, 1);
 
-        this.startedAt = this.audioContext.currentTime - offset;
         this.sourceNode.onended = () => {};
         this.setMuted(this.muted);
     }
 
     pause() {
-        let elapsed = this.audioContext.currentTime - this.startedAt;
-        this.stop();
-        this.pausedAt = elapsed;
+        this.audioContext.suspend();
+        this.audible = false;
     }
 
     stop() {
@@ -61,9 +63,6 @@ module.exports = class AudioChannel {
             this.sourceNode.stop(0);
             this.sourceNode = null;
         }
-
-        this.pausedAt = 0;
-        this.startedAt = 0;
     }
 
     setMuted(bool) {
