@@ -9,11 +9,13 @@ module.exports = class AudioChannel {
         this.analyser = null;
         this.muted = true;
         this.audible = false;
-        this.autoMuted = false;
+        this.startTime = 0;
+        this.pauseTime = 0;
     }
 
     play() {
-        if(this.sourceNode) {
+        if (this.sourceNode) {
+            this.startTime += (Date.now() - this.pauseTime);
             this.audioContext.resume();
             return;
         }
@@ -32,9 +34,10 @@ module.exports = class AudioChannel {
             let db = 20 * Math.log(Math.max(max, Math.pow(10, -72 / 20))) / Math.LN10;
             this.audible = db > -40;
 
-            if(this.audioContext.currentTime <= config.autoplaySeconds && this.muted && this.audible && !this.autoMuted) {
+            this.currentTime = (Date.now() - this.startTime) / 1000;
+            if (this.muted && this.audible && !this.autoPlayed && this.currentTime < config.autoplaySeconds) {
                 this.setMuted(false);
-                this.autoMuted = true;
+                this.autoPlayed = true;
             }
         };
 
@@ -46,15 +49,17 @@ module.exports = class AudioChannel {
         this.analyser.connect(this.audioContext.destination);
 
         this.sourceNode.buffer = this.buffer;
-        this.sourceNode.start(0, 1);
-
         this.sourceNode.onended = () => {};
         this.setMuted(this.muted);
+
+        this.sourceNode.start();
+        this.startTime = Date.now();
     }
 
     pause() {
         this.audioContext.suspend();
         this.audible = false;
+        this.pauseTime = Date.now();
     }
 
     stop() {
