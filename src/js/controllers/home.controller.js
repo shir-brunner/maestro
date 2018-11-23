@@ -14,14 +14,18 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     $scope.toggleMuted = instrument => instrument.audioChannel.setMuted(!instrument.audioChannel.muted);
     $scope.play = () => {
-        $scope.instruments.forEach(x => x.audioChannel.play());
+        $scope.instruments.forEach(instrument => instrument.audioChannel.play());
         $scope.audioState = 'playing';
     };
 
     $scope.pause = () => {
-        $scope.instruments.forEach(x => x.audioChannel.pause());
+        $scope.instruments.forEach(instrument => instrument.audioChannel.pause());
         $scope.audioState = 'paused';
     };
 
     $scope.togglePlayPause = () => $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
+    $scope.onTimelineChange = percent => {
+        let currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
+        $scope.instruments.forEach(instrument => instrument.audioChannel.setCurrentTime(currentTime));
+    };
 }];

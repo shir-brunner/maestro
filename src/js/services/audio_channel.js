@@ -6,14 +6,15 @@ module.exports = class AudioChannel {
         this.audioContext = audioContext;
         this.sourceNode = null;
         this.gainNode = null;
-        this.analyser = null;
+        this.scriptProcessor = null;
         this.muted = true;
         this.audible = false;
         this.startTime = 0;
         this.pauseTime = 0;
+        this.currentTime = 0;
     }
 
-    play() {
+    play(currentTime = 0) {
         if (this.sourceNode) {
             this.startTime += (Date.now() - this.pauseTime);
             this.audioContext.resume();
@@ -21,8 +22,8 @@ module.exports = class AudioChannel {
         }
 
         this.gainNode = this.audioContext.createGain();
-        this.analyser = this.audioContext.createScriptProcessor(0, 1, 1);
-        this.analyser.onaudioprocess = e => {
+        this.scriptProcessor = this.audioContext.createScriptProcessor(0, 1, 1);
+        this.scriptProcessor.onaudioprocess = e => {
             let int = e.inputBuffer.getChannelData(0);
 
             let max = 0;
@@ -45,14 +46,14 @@ module.exports = class AudioChannel {
 
         this.sourceNode.connect(this.gainNode);
         this.gainNode.connect(this.audioContext.destination);
-        this.sourceNode.connect(this.analyser);
-        this.analyser.connect(this.audioContext.destination);
+        this.sourceNode.connect(this.scriptProcessor);
+        this.scriptProcessor.connect(this.audioContext.destination);
 
         this.sourceNode.buffer = this.buffer;
         this.sourceNode.onended = () => {};
         this.setMuted(this.muted);
 
-        this.sourceNode.start();
+        this.sourceNode.start(0, currentTime);
         this.startTime = Date.now();
     }
 
@@ -63,11 +64,15 @@ module.exports = class AudioChannel {
     }
 
     stop() {
-        if (this.sourceNode) {
-            this.sourceNode.disconnect();
-            this.sourceNode.stop(0);
-            this.sourceNode = null;
-        }
+        this.sourceNode.disconnect();
+        this.sourceNode.stop();
+        this.sourceNode = null;
+
+        this.scriptProcessor.disconnect();
+        this.scriptProcessor = null;
+
+        this.gainNode.disconnect();
+        this.gainNode = null;
     }
 
     setMuted(bool) {
@@ -76,4 +81,9 @@ module.exports = class AudioChannel {
         if (this.gainNode && this.gainNode.gain)
             this.gainNode.gain.value = this.muted ? 0 : 1;
     }
-}
+
+    setCurrentTime(currentTime) {
+        this.stop();
+        this.play(0, currentTime);
+    }
+};

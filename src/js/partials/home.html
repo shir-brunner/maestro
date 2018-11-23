@@ -11,8 +11,8 @@
     <div ng-hide="audioState === 'loading'">
         <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
         <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
-        <div class="timeline">
+        <timeline class="timeline">
             <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
-        </div>
+        </timeline>
     </div>
 </div>
