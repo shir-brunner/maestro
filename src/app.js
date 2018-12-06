@@ -56,3 +56,9 @@ function fixPosition($element, scaleX, scaleY) {
         'top': (originalY * scaleY) + 'px'
     });
 }
+
+setTimeout(() => {
+    $('#curtain').animate({
+        top: -970,
+    }, 5000);
+}, 3000);

@@ -100,5 +100,12 @@ body {
 }
 
 #curtain {
-  
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100vw;
+  height: 100vh;
+  background: url('../img/curtain.png') no-repeat;
+  background-size: 100% 100%;
 }
