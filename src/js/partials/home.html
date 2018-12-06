@@ -9,7 +9,7 @@
         </div>
     </div>
     <div ng-hide="audioState === 'loading'">
-        <div class="controls">
+        <div id="controls">
             <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
             <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
             <timeline class="timeline">

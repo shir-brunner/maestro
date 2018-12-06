@@ -10,7 +10,13 @@ body {
   height: 100vh;
 }
 
+#content {
+  width: 100vw;
+  height: 100vh;
+}
+
 .instrument-container {
+  transform-origin: top left;
   cursor: pointer;
   position: absolute;
   &.muted {
@@ -51,10 +57,11 @@ body {
   }
 }
 
-.controls {
+#controls {
+  transform-origin: top left;
   position: absolute;
-  width: 100%;
-  bottom: 50px;
+  width: 1920px;
+  top: 875px;
   left: 0;
   text-align: center;
 
@@ -92,7 +99,6 @@ body {
   }
 }
 
-#content {
-  width: 100vw;
-  height: 100vh;
+#curtain {
+  
 }
