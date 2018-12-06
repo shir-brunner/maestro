@@ -7,6 +7,10 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     });
 
     audioService.loadAudio($scope.instruments).then(() => {
+        $scope.instruments.forEach(instrument => {
+            instrument.audioChannel.onEnded = () => $scope.audioState = 'paused';
+        });
+
         $scope.play();
         $interval(() => {
         }, 1);

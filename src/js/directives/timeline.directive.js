@@ -5,9 +5,7 @@ module.exports = function () {
         restrict: 'E',
         link: function (scope, element, attrs) {
             let $timeline = $(element);
-            $timeline.on('click', e => {
-                scope.onTimelineChange(50)
-            });
+            $timeline.on('click', e => scope.onTimelineChange(e.offsetX / $timeline.width() * 100));
         }
     };
 };

@@ -27,7 +27,6 @@ module.exports = class AudioChannel {
             let int = e.inputBuffer.getChannelData(0);
 
             let max = 0;
-
             for (let i = 0; i < int.length; i++) {
                 max = int[i] > max ? int[i] : max;
             }
@@ -36,7 +35,7 @@ module.exports = class AudioChannel {
             this.audible = db > -40;
 
             this.currentTime = (Date.now() - this.startTime) / 1000;
-            if (this.muted && this.audible && !this.autoPlayed && this.currentTime < config.autoplaySeconds) {
+            if (this.muted && this.audible && !this.autoPlayed && this.currentTime <= config.autoplaySeconds) {
                 this.setMuted(false);
                 this.autoPlayed = true;
             }
@@ -50,11 +49,11 @@ module.exports = class AudioChannel {
         this.scriptProcessor.connect(this.audioContext.destination);
 
         this.sourceNode.buffer = this.buffer;
-        this.sourceNode.onended = () => {};
+        this.sourceNode.onended = () => this._onEnded();
         this.setMuted(this.muted);
 
         this.sourceNode.start(0, currentTime);
-        this.startTime = Date.now();
+        this.startTime = Date.now() - (currentTime * 1000);
     }
 
     pause() {
@@ -84,6 +83,12 @@ module.exports = class AudioChannel {
 
     setCurrentTime(currentTime) {
         this.stop();
-        this.play(0, currentTime);
+        this.play(currentTime);
+    }
+
+    _onEnded() {
+        this.stop();
+        this.currentTime = 0;
+        this.onEnded && this.onEnded();
     }
 };

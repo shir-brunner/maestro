@@ -51,35 +51,44 @@ body {
   }
 }
 
-.play-button, .pause-button {
+.controls {
   position: absolute;
-  left: 190px;
-  top: 890px;
-  width: 40px;
-  height: 40px;
-  border: 1px solid white;
-  cursor: pointer;
-}
+  width: 100%;
+  bottom: 50px;
+  left: 0;
+  text-align: center;
 
-.play-button {
-  background: white;
-}
+  .play-button {
+    background-image: url('../img/play_button.png');
+  }
 
-.pause-button {
-  background: yellow;
-}
+  .pause-button {
+    background-image: url('../img/pause_button.png');
+  }
 
-.timeline {
-  position: absolute;
-  left: 240px;
-  top: 900px;
-  width: 1360px;
-  height: 20px;
-  border: 1px solid white;
+  .play-button, .pause-button {
+    cursor: pointer;
+    background-size: 100% 100%;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
 
-  .progress {
-    height: 100%;
-    background: red;
+  .timeline {
+    vertical-align: middle;
+    display: inline-block;
+    width: 1360px;
+    height: 24.72px;
+    background: url('../img/timeline_background.png') no-repeat;
+    background-size: 100% 100%;
+
+    .progress {
+      height: 100%;
+      background: url('../img/timeline_progress.png') no-repeat;
+      background-size: auto 100%;
+    }
   }
 }
 
