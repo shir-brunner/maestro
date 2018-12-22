@@ -13,10 +13,19 @@ module.exports = [function () {
                 request.responseType = 'arraybuffer';
 
                 request.onload = function() {
+                    let st = Date.now();
                     audioContext.decodeAudioData(request.response, function(buffer) {
+                        alert(Date.now() - st);
                         instrument.audioChannel = new AudioChannel(buffer, audioContext);
                         resolve();
                     }, function() { reject(instrument.musicPath); });
+                };
+
+                request.onprogress = progress => {
+                    instrument.percentLoaded = progress.loaded / progress.total * 100;
+                    audioService.onProgress && audioService.onProgress(instruments.reduce((percent, instrument) => {
+                        return percent + ((instrument.percentLoaded || 0) / instruments.length);
+                    }, 0));
                 };
 
                 request.send();

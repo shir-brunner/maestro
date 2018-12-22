@@ -1,12 +1,14 @@
 <div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0">
-    <div id="curtain"></div>
-    <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
-         ng-click="toggleMuted(instrument)"
-         ng-class="{'muted': instrument.audioChannel.muted}">
-        <div class="instrument" ng-class="{'audible': instrument.audioChannel.audible}"></div>
-        <div class="spots">
-            <img src="../../img/spot.png" class="spot">
-            <img src="../../img/spot.png" class="spot">
+    <div id="curtain" style="top: {{curtainTop}}px"></div>
+    <div ng-show="curtainLoaded">
+        <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
+             ng-click="toggleMuted(instrument)"
+             ng-class="{'muted': instrument.audioChannel.muted || audioState === 'loading'}">
+            <div class="instrument" ng-class="{'audible': instrument.audioChannel.audible}"></div>
+            <div class="spots">
+                <img src="../../img/spot.png" class="spot">
+                <img src="../../img/spot.png" class="spot">
+            </div>
         </div>
     </div>
     <div ng-hide="audioState === 'loading'">
@@ -14,7 +16,8 @@
             <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
             <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
             <timeline class="timeline">
-                <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
+                <div class="progress"
+                     style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
             </timeline>
         </div>
     </div>

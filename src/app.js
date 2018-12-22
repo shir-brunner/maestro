@@ -24,6 +24,7 @@ app.constant('Config', config);
 
 const $ = require('jquery');
 const $window = $(window).on('resize', onWindowResize);
+setTimeout(() => onWindowResize(), 200);
 
 function onWindowResize() {
     let windowWidth = $window.width();
@@ -56,9 +57,3 @@ function fixPosition($element, scaleX, scaleY) {
         'top': (originalY * scaleY) + 'px'
     });
 }
-
-setTimeout(() => {
-    $('#curtain').animate({
-        top: -970,
-    }, 5000);
-}, 3000);
