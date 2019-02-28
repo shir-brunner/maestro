@@ -1,5 +1,5 @@
 <div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0">
-    <div id="curtain" style="top: {{curtainTop}}px"></div>
+    <div id="curtain"></div>
     <div ng-show="curtainLoaded">
         <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
              ng-click="toggleMuted(instrument)"

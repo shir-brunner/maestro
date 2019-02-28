@@ -1,0 +1,187 @@
+.vocal1 {
+  width: 200px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/vocal1.png');
+    animation: vocal1 2.5s steps(76) infinite;
+  }
+  left: 950px;
+  top: 400px;
+  .spots .spot {
+    bottom: -50px;
+  }
+}
+
+@keyframes vocal1 {
+  100% {
+    background-position-y: -22800px;
+  }
+}
+
+.vocal2 {
+  width: 127px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/vocal2.png');
+    animation: vocal2 2.6s steps(76) infinite;
+  }
+  left: 720px;
+  top: 400px;
+  .spots .spot {
+    bottom: -40px;
+    width: 200% !important;
+    left: -50% !important;
+  }
+}
+
+@keyframes vocal2 {
+  100% {
+    background-position-y: -22800px;
+  }
+}
+
+.vocal3 {
+  width: 246px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/vocal3.png');
+    animation: vocal3 2.6s steps(76) infinite;
+  }
+  left: 480px;
+  top: 400px;
+  .spots .spot {
+    bottom: -60px;
+  }
+}
+
+@keyframes vocal3 {
+  100% {
+    background-position-y: -22800px;
+  }
+}
+
+.acoustic_guitar {
+  width: 300px;
+  height: 162px;
+  .instrument {
+    background: url('../img/mobile/acoustic_guitar.png');
+    animation: acoustic_guitar 2.6s steps(76) infinite;
+  }
+  left: 1220px;
+  top: 480px;
+}
+
+@keyframes acoustic_guitar {
+  100% {
+    background-position-y: -12312px;
+  }
+}
+
+.bass {
+  width: 227px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/bass.png');
+    animation: bass 2.6s steps(77) infinite;
+  }
+  left: 1330px;
+  top: 70px;
+  .spots .spot {
+    bottom: -50px;
+  }
+}
+
+@keyframes bass {
+  100% {
+    background-position-y: -23100px;
+  }
+}
+
+.drums {
+  width: 300px;
+  height: 298px;
+  .instrument {
+    background: url('../img/mobile/drums.png');
+    animation: drums 2.6s steps(76) infinite;
+  }
+  left: 950px;
+  top: 70px;
+}
+
+@keyframes drums {
+  100% {
+    background-position-y: -22648px;
+  }
+}
+
+.electric_guitar {
+  width: 185px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/electric_guitar.png');
+    animation: electric_guitar 2.6s steps(74) infinite;
+  }
+  left: 1570px;
+  top: 350px;
+  .spots .spot {
+    bottom: -50px;
+  }
+}
+
+@keyframes electric_guitar {
+  100% {
+    background-position-y: -22200px;
+  }
+}
+
+.strings {
+  width: 612px;
+  height: 300px;
+  .instrument {
+    background: url('../img/mobile/strings.png');
+    animation: strings 2.6s steps(74) infinite;
+  }
+  left: 230px;
+  top: 70px;
+  .spots {
+    .spot:nth-child(1) {
+      width: 70% !important;
+      left: -10% !important;
+      bottom: -80px;
+    }
+    .spot:nth-child(2) {
+      display: inline-block;
+      width: 80% !important;
+      left: 27% !important;
+      bottom: -90px;
+    }
+  }
+}
+
+@keyframes strings {
+  100% {
+    background-position-y: -22200px;
+  }
+}
+
+.melodica {
+  width: 300px;
+  height: 94px;
+  .instrument {
+    background: url('../img/mobile/melodica.png');
+    animation: melodica 6s steps(248) infinite;
+  }
+  left: 150px;
+  top: 530px;
+  .spots .spot {
+    width: 180% !important;
+    bottom: -90px;
+    left: -40% !important;
+  }
+}
+
+@keyframes melodica {
+  100% {
+    background-position-y: -23312px;
+  }
+}

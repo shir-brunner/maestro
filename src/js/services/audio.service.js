@@ -13,9 +13,7 @@ module.exports = [function () {
                 request.responseType = 'arraybuffer';
 
                 request.onload = function() {
-                    let st = Date.now();
                     audioContext.decodeAudioData(request.response, function(buffer) {
-                        alert(Date.now() - st);
                         instrument.audioChannel = new AudioChannel(buffer, audioContext);
                         resolve();
                     }, function() { reject(instrument.musicPath); });
