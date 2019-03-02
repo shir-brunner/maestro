@@ -1,34 +1,39 @@
+.instrument, .spots {
+  transform: scale(2);
+  transform-origin: top left;
+}
+
 .vocal1 {
-  width: 200px;
-  height: 300px;
+  width: 100px;
+  height: 150px;
   .instrument {
-    background: url('../img/mobile/vocal1.png');
+    background: url('../img/mobile/half/vocal1.png');
     animation: vocal1 2.5s steps(76) infinite;
   }
   left: 950px;
   top: 400px;
   .spots .spot {
-    bottom: -50px;
+    bottom: -170px;
   }
 }
 
 @keyframes vocal1 {
   100% {
-    background-position-y: -22800px;
+    background-position-y: -11400px;
   }
 }
 
 .vocal2 {
-  width: 127px;
-  height: 300px;
+  width: 64px;
+  height: 151px;
   .instrument {
-    background: url('../img/mobile/vocal2.png');
+    background: url('../img/mobile/half/vocal2.png');
     animation: vocal2 2.6s steps(76) infinite;
   }
   left: 720px;
   top: 400px;
   .spots .spot {
-    bottom: -40px;
+    bottom: -170px;
     width: 200% !important;
     left: -50% !important;
   }
@@ -36,109 +41,115 @@
 
 @keyframes vocal2 {
   100% {
-    background-position-y: -22800px;
+    background-position-y: -11490px;
   }
 }
 
 .vocal3 {
-  width: 246px;
-  height: 300px;
+  width: 123px;
+  height: 150px;
   .instrument {
-    background: url('../img/mobile/vocal3.png');
+    background: url('../img/mobile/half/vocal3.png');
     animation: vocal3 2.6s steps(76) infinite;
   }
   left: 480px;
   top: 400px;
   .spots .spot {
-    bottom: -60px;
+    bottom: -180px;
   }
 }
 
 @keyframes vocal3 {
   100% {
-    background-position-y: -22800px;
+    background-position-y: -11400px;
   }
 }
 
 .acoustic_guitar {
-  width: 300px;
-  height: 162px;
+  width: 150px;
+  height: 81px;
   .instrument {
-    background: url('../img/mobile/acoustic_guitar.png');
+    background: url('../img/mobile/half/acoustic_guitar.png');
     animation: acoustic_guitar 2.6s steps(76) infinite;
   }
   left: 1220px;
   top: 480px;
+  .spots .spot {
+    bottom: -140px;
+  }
 }
 
 @keyframes acoustic_guitar {
   100% {
-    background-position-y: -12312px;
+    background-position-y: -6156px;
   }
 }
 
 .bass {
-  width: 227px;
-  height: 300px;
+  width: 114px;
+  height: 150px;
   .instrument {
-    background: url('../img/mobile/bass.png');
+    background: url('../img/mobile/half/bass.png');
     animation: bass 2.6s steps(77) infinite;
   }
   left: 1330px;
   top: 70px;
   .spots .spot {
-    bottom: -50px;
+    bottom: -175px;
   }
 }
 
 @keyframes bass {
   100% {
-    background-position-y: -23100px;
+    background-position-y: -11601px;
   }
 }
 
 .drums {
-  width: 300px;
-  height: 298px;
+  width: 150px;
+  height: 149px;
   .instrument {
-    background: url('../img/mobile/drums.png');
+    background: url('../img/mobile/half/drums.png');
     animation: drums 2.6s steps(76) infinite;
   }
   left: 950px;
   top: 70px;
+  .spots .spot {
+    bottom: -190px;
+  }
 }
 
 @keyframes drums {
   100% {
-    background-position-y: -22648px;
+    background-position-y: -11324px;
   }
 }
 
 .electric_guitar {
-  width: 185px;
-  height: 300px;
+  width: 93px;
+  height: 150px;
   .instrument {
-    background: url('../img/mobile/electric_guitar.png');
+    background: url('../img/mobile/half/electric_guitar.png');
     animation: electric_guitar 2.6s steps(74) infinite;
   }
   left: 1570px;
   top: 350px;
   .spots .spot {
-    bottom: -50px;
+    bottom: -180px;
   }
 }
 
 @keyframes electric_guitar {
   100% {
-    background-position-y: -22200px;
+    background-position-y: -11160px;
   }
 }
 
 .strings {
-  width: 612px;
-  height: 300px;
+  width: 306px;
+  height: 150px;
   .instrument {
-    background: url('../img/mobile/strings.png');
+    background: url('../img/mobile/half/strings.png');
     animation: strings 2.6s steps(74) infinite;
   }
   left: 230px;
@@ -147,28 +158,28 @@
     .spot:nth-child(1) {
       width: 70% !important;
       left: -10% !important;
-      bottom: -80px;
+      bottom: -180px;
     }
     .spot:nth-child(2) {
       display: inline-block;
       width: 80% !important;
       left: 27% !important;
-      bottom: -90px;
+      bottom: -190px;
     }
   }
 }
 
 @keyframes strings {
   100% {
-    background-position-y: -22200px;
+    background-position-y: -11100px;
   }
 }
 
 .melodica {
-  width: 300px;
-  height: 94px;
+  width: 150px;
+  height: 47px;
   .instrument {
-    background: url('../img/mobile/melodica.png');
+    background: url('../img/mobile/half/melodica.png');
     animation: melodica 6s steps(248) infinite;
   }
   left: 150px;
@@ -182,6 +193,6 @@
 
 @keyframes melodica {
   100% {
-    background-position-y: -23312px;
+    background-position-y: -11656px;
   }
 }
