@@ -27,10 +27,27 @@ const $window = $(window).on('resize', onWindowResize);
 setTimeout(() => onWindowResize(), 200);
 
 function onWindowResize() {
+    let ratio = 1920 / 970;
+    let $content = $('#content');
     let windowWidth = $window.width();
     let windowHeight = $window.height();
-    let scaleX = windowWidth / 1920;
-    let scaleY = windowHeight / 970;
+
+    $content.css('height', $window.width() / ratio);
+    let contentHeight = $content.height();
+    if(contentHeight > windowHeight) { // landscape
+        contentHeight = windowHeight;
+        $content.css('height', contentHeight);
+        $content.css('width', contentHeight * ratio);
+    } else { // portrait
+        $content.css('width', '100%');
+    }
+
+    $content.css('margin-top', (windowHeight - contentHeight) / 2);
+    $content.css('margin-left', (windowWidth - $content.width()) / 2);
+
+    let contentWidth = $content.width();
+    let scaleX = contentWidth / 1920;
+    let scaleY = contentHeight / 970;
 
     $('.instrument-container').each(function () {
         fixPosition($(this), scaleX, scaleY);
