@@ -54,7 +54,6 @@ function onWindowResize() {
     });
 
     fixPosition($('#controls'), scaleX, scaleY);
-    fixPosition($('#loading'), scaleX, scaleY);
 }
 
 function fixPosition($element, scaleX, scaleY) {

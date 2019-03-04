@@ -17,7 +17,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     $scope.percentLoaded = 0;
     audioService.onProgress = percentLoaded => {
         $scope.percentLoaded = percentLoaded;
-        if(percentLoaded === 100) {
+        if(percentLoaded >= 100) {
             $scope.audioState = 'waitingUser';
         }
 

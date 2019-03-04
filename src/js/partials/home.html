@@ -11,19 +11,16 @@
             </div>
         </div>
     </div>
-    <div ng-hide="audioState === 'loading'">
+    <div>
         <div id="controls">
             <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
             <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
-            <timeline class="timeline">
-                <div class="progress"
-                     style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
+            <div class="button-placeholder" ng-show="audioState === 'loading'"></div>
+            <div class="play-button" ng-show="audioState === 'waitingUser'"></div>
+            <timeline class="timeline" ng-hide="audioState === 'loading' || audioState === 'waitingUser'">
+                <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
             </timeline>
-        </div>
-    </div>
-    <div ng-show="audioState === 'loading'">
-        <div id="loading">
-            <timeline class="timeline">
+            <timeline class="timeline loading" ng-show="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{percentLoaded}}%;"></div>
             </timeline>
         </div>

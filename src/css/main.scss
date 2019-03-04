@@ -74,7 +74,7 @@ body {
     background-image: url('../img/pause_button.png');
   }
 
-  .play-button, .pause-button {
+  .play-button, .pause-button, .button-placeholder {
     cursor: pointer;
     background-size: 100% 100%;
     width: 50px;
@@ -83,15 +83,6 @@ body {
     vertical-align: middle;
     margin-right: 10px;
   }
-}
-
-#loading {
-  transform-origin: top left;
-  position: absolute;
-  width: 1920px;
-  top: 875px;
-  left: 0;
-  text-align: center;
 }
 
 .timeline {
@@ -105,6 +96,14 @@ body {
   .progress {
     height: 100%;
     background: url('../img/timeline_progress.png') no-repeat;
+    background-size: auto 100%;
+  }
+}
+
+.timeline.loading {
+  background: url('../img/loading_background.png') no-repeat;
+  .progress {
+    background: url('../img/timeline_background.png') no-repeat;
     background-size: auto 100%;
   }
 }
