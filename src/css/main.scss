@@ -12,7 +12,8 @@ body {
   background: url('../img/background.jpg');
   background-size: 100% 100%;
   position: relative;
-  outline: 0;
+  outline: none;
+  overflow-y: hidden;
 }
 
 .instrument-container {
@@ -82,20 +83,29 @@ body {
     vertical-align: middle;
     margin-right: 10px;
   }
+}
 
-  .timeline {
-    vertical-align: middle;
-    display: inline-block;
-    width: 1360px;
-    height: 24.72px;
-    background: url('../img/timeline_background.png') no-repeat;
-    background-size: 100% 100%;
+#loading {
+  transform-origin: top left;
+  position: absolute;
+  width: 1920px;
+  top: 875px;
+  left: 0;
+  text-align: center;
+}
 
-    .progress {
-      height: 100%;
-      background: url('../img/timeline_progress.png') no-repeat;
-      background-size: auto 100%;
-    }
+.timeline {
+  vertical-align: middle;
+  display: inline-block;
+  width: 1360px;
+  height: 24.72px;
+  background: url('../img/timeline_background.png') no-repeat;
+  background-size: 100% 100%;
+
+  .progress {
+    height: 100%;
+    background: url('../img/timeline_progress.png') no-repeat;
+    background-size: auto 100%;
   }
 }
 

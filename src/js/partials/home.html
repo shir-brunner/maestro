@@ -1,6 +1,6 @@
 <div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0" class="no-select">
-    <div id="curtain"></div>
-    <div ng-show="curtainLoaded">
+    <div id="curtain" ng-click="start()"></div>
+    <div>
         <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
              ng-click="toggleMuted(instrument)"
              ng-class="{'muted': instrument.audioChannel.muted || audioState === 'loading'}">
@@ -18,6 +18,13 @@
             <timeline class="timeline">
                 <div class="progress"
                      style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
+            </timeline>
+        </div>
+    </div>
+    <div ng-show="audioState === 'loading'">
+        <div id="loading">
+            <timeline class="timeline">
+                <div class="progress" style="width: {{percentLoaded}}%;"></div>
             </timeline>
         </div>
     </div>
