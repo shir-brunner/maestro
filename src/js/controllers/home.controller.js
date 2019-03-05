@@ -36,11 +36,13 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     $scope.play = () => {
         $scope.instruments.forEach(instrument => instrument.audioChannel.play());
         $scope.audioState = 'playing';
+        $scope.$apply();
     };
 
     $scope.pause = () => {
         $scope.instruments.forEach(instrument => instrument.audioChannel.pause());
         $scope.audioState = 'paused';
+        $scope.$apply();
     };
 
     $scope.togglePlayPause = () => $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
