@@ -8787,7 +8787,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 950px;
   top: 400px; }
   .vocal1 .instrument {
-    background: url(/src/img/mobile/half/vocal1.png);
+    background: url(/maestro/dist/src/img/mobile/half/vocal1.png);
     animation: vocal1 2.5s steps(76) infinite; }
   .vocal1 .spots .spot {
     bottom: -170px; }
@@ -8802,7 +8802,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 720px;
   top: 400px; }
   .vocal2 .instrument {
-    background: url(/src/img/mobile/half/vocal2.png);
+    background: url(/maestro/dist/src/img/mobile/half/vocal2.png);
     animation: vocal2 2.6s steps(76) infinite; }
   .vocal2 .spots .spot {
     bottom: -170px;
@@ -8819,7 +8819,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 480px;
   top: 400px; }
   .vocal3 .instrument {
-    background: url(/src/img/mobile/half/vocal3.png);
+    background: url(/maestro/dist/src/img/mobile/half/vocal3.png);
     animation: vocal3 2.6s steps(76) infinite; }
   .vocal3 .spots .spot {
     bottom: -180px; }
@@ -8834,7 +8834,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 1220px;
   top: 480px; }
   .acoustic_guitar .instrument {
-    background: url(/src/img/mobile/half/acoustic_guitar.png);
+    background: url(/maestro/dist/src/img/mobile/half/acoustic_guitar.png);
     animation: acoustic_guitar 2.6s steps(76) infinite; }
   .acoustic_guitar .spots .spot {
     bottom: -140px; }
@@ -8849,7 +8849,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 1330px;
   top: 70px; }
   .bass .instrument {
-    background: url(/src/img/mobile/half/bass.png);
+    background: url(/maestro/dist/src/img/mobile/half/bass.png);
     animation: bass 2.6s steps(77) infinite; }
   .bass .spots .spot {
     bottom: -175px; }
@@ -8864,7 +8864,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 950px;
   top: 70px; }
   .drums .instrument {
-    background: url(/src/img/mobile/half/drums.png);
+    background: url(/maestro/dist/src/img/mobile/half/drums.png);
     animation: drums 2.6s steps(76) infinite; }
   .drums .spots .spot {
     bottom: -190px; }
@@ -8879,7 +8879,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 1570px;
   top: 350px; }
   .electric_guitar .instrument {
-    background: url(/src/img/mobile/half/electric_guitar.png);
+    background: url(/maestro/dist/src/img/mobile/half/electric_guitar.png);
     animation: electric_guitar 2.6s steps(74) infinite; }
   .electric_guitar .spots .spot {
     bottom: -180px; }
@@ -8894,7 +8894,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 230px;
   top: 70px; }
   .strings .instrument {
-    background: url(/src/img/mobile/half/strings.png);
+    background: url(/maestro/dist/src/img/mobile/half/strings.png);
     animation: strings 2.6s steps(74) infinite; }
   .strings .spots .spot:nth-child(1) {
     width: 70% !important;
@@ -8916,7 +8916,7 @@ a.text-dark:focus, a.text-dark:hover {
   left: 150px;
   top: 530px; }
   .melodica .instrument {
-    background: url(/src/img/mobile/half/melodica.png);
+    background: url(/maestro/dist/src/img/mobile/half/melodica.png);
     animation: melodica 6s steps(248) infinite; }
   .melodica .spots .spot {
     width: 180% !important;
@@ -8931,7 +8931,7 @@ body {
   background: black; }
 
 #content {
-  background: url(/src/img/background.jpg);
+  background: url(/maestro/dist/src/img/background.jpg);
   background-size: 100% 100%;
   position: relative;
   outline: none;
@@ -8973,9 +8973,9 @@ body {
   left: 0;
   text-align: center; }
   #controls .play-button {
-    background-image: url(/src/img/play_button.png); }
+    background-image: url(/maestro/dist/src/img/play_button.png); }
   #controls .pause-button {
-    background-image: url(/src/img/pause_button.png); }
+    background-image: url(/maestro/dist/src/img/pause_button.png); }
   #controls .play-button, #controls .pause-button, #controls .button-placeholder {
     cursor: pointer;
     background-size: 100% 100%;
@@ -8990,17 +8990,17 @@ body {
   display: inline-block;
   width: 1360px;
   height: 24.72px;
-  background: url(/src/img/timeline_background.png) no-repeat;
+  background: url(/maestro/dist/src/img/timeline_background.png) no-repeat;
   background-size: 100% 100%; }
   .timeline .progress {
     height: 100%;
-    background: url(/src/img/timeline_progress.png) no-repeat;
+    background: url(/maestro/dist/src/img/timeline_progress.png) no-repeat;
     background-size: auto 100%; }
 
 .timeline.loading {
-  background: url(/src/img/loading_background.png) no-repeat; }
+  background: url(/maestro/dist/src/img/loading_background.png) no-repeat; }
   .timeline.loading .progress {
-    background: url(/src/img/timeline_background.png) no-repeat;
+    background: url(/maestro/dist/src/img/timeline_background.png) no-repeat;
     background-size: auto 100%; }
 
 #curtain {
@@ -9010,7 +9010,7 @@ body {
   z-index: 2;
   width: 100%;
   height: 100%;
-  background: url(/src/img/curtain.png) no-repeat;
+  background: url(/maestro/dist/src/img/curtain.png) no-repeat;
   background-size: 100% 100%; }
 
 .no-select {
