@@ -49551,7 +49551,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     var instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(function (instrumentName) {
-        return { name: instrumentName, musicPath: '/src/music/' + instrumentName + '.mp3' };
+        return { name: instrumentName, musicPath: '/maestro/dist/src/music/' + instrumentName + '.mp3' };
     });
 
     var $curtain = $('#curtain');
