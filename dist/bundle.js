@@ -48903,10 +48903,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             var isNode = typeof process !== "undefined" && classString(process).toLowerCase() === "[object process]";
 
-            var hasEnvVariables = typeof process !== "undefined" && typeof process.env !== "undefined";
+            var hasEnvVariables = typeof process !== "undefined" && "object" !== "undefined";
 
             function env(key) {
-                return hasEnvVariables ? process.env[key] : undefined;
+                return hasEnvVariables ? __webpack_require__.i({"ENV":undefined})[key] : undefined;
             }
 
             function getNativePromise() {
@@ -49551,7 +49551,10 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     var instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(function (instrumentName) {
-        return { name: instrumentName, musicPath: '/maestro/dist/src/music/' + instrumentName + '.mp3' };
+        var musicPath = '/maestro/dist/src/music/' + instrumentName + '.mp3';
+        if (undefined === 'dev') musicPath = musicPath.replace('/maestro/dist', '');
+
+        return { name: instrumentName, musicPath: musicPath };
     });
 
     var $curtain = $('#curtain');
@@ -49591,7 +49594,6 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             return instrument.audioChannel.play();
         });
         $scope.audioState = 'playing';
-        $scope.$apply();
     };
 
     $scope.pause = function () {
@@ -49599,7 +49601,6 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             return instrument.audioChannel.pause();
         });
         $scope.audioState = 'paused';
-        $scope.$apply();
     };
 
     $scope.togglePlayPause = function () {

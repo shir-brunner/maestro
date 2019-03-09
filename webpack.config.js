@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const extractPlugin = new ExtractTextPlugin({
@@ -66,6 +67,11 @@ module.exports = {
         ]
     },
     plugins: [
-        extractPlugin
+        extractPlugin,
+        new webpack.DefinePlugin({
+            "process.env": {
+                ENV: JSON.stringify(process.env.ENV)
+            }
+        }),
     ]
 };

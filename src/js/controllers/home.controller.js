@@ -4,7 +4,11 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     let instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(instrumentName => {
-        return { name: instrumentName, musicPath: `/maestro/dist/src/music/${instrumentName}.mp3` };
+        let musicPath = `/maestro/dist/src/music/${instrumentName}.mp3`;
+        if(process.env.ENV === 'dev')
+            musicPath = musicPath.replace('/maestro/dist', '');
+
+        return { name: instrumentName, musicPath: musicPath };
     });
 
     let $curtain = $('#curtain');
@@ -39,13 +43,11 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     $scope.play = () => {
         $scope.instruments.forEach(instrument => instrument.audioChannel.play());
         $scope.audioState = 'playing';
-        $scope.$apply();
     };
 
     $scope.pause = () => {
         $scope.instruments.forEach(instrument => instrument.audioChannel.pause());
         $scope.audioState = 'paused';
-        $scope.$apply();
     };
 
     $scope.togglePlayPause = () => $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
