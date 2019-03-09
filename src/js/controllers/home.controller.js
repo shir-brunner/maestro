@@ -28,7 +28,10 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         if($scope.audioState !== 'waitingUser')
             return;
 
-        $curtain.animate({ top: $curtain.height() * -1 }, 3500, () => $scope.play());
+        $curtain.animate({ top: $curtain.height() * -1 }, 3500, () => {
+            $curtain.hide();
+            $scope.play();
+        });
         $interval(() => {}, 1);
     };
 

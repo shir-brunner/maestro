@@ -49577,7 +49577,8 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         if ($scope.audioState !== 'waitingUser') return;
 
         $curtain.animate({ top: $curtain.height() * -1 }, 3500, function () {
-            return $scope.play();
+            $curtain.hide();
+            $scope.play();
         });
         $interval(function () {}, 1);
     };
