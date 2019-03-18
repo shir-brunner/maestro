@@ -22,9 +22,9 @@ directives.load(app);
 app.filter('capitalize', () => input => (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '');
 app.constant('Config', config);
 
+/*
 const $ = require('jquery');
 const $window = $(window).on('resize', onWindowResize);
-setTimeout(() => onWindowResize(), 1000);
 
 function onWindowResize() {
     let ratio = 1920 / 970;
@@ -73,4 +73,4 @@ function fixPosition($element, scaleX, scaleY) {
         'left': (originalX * scaleX) + 'px',
         'top': (originalY * scaleY) + 'px'
     });
-}
+}*/

@@ -1,4 +1,4 @@
-<div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0" class="no-select" ng-show="imagesLoaded">
+<div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0" class="no-select">
     <div id="curtain" ng-click="start()"></div>
     <div>
         <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
@@ -16,7 +16,7 @@
             <div class="play-button" ng-show="audioState === 'paused'" ng-click="play()"></div>
             <div class="pause-button" ng-show="audioState === 'playing'" ng-click="pause()"></div>
             <div class="button-placeholder" ng-show="audioState === 'loading'"></div>
-            <div class="play-button" ng-show="audioState === 'waitingUser'"></div>
+            <div class="play-button" id="fake-play-button" ng-show="audioState === 'waitingUser'"></div>
             <timeline class="timeline" ng-hide="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
             </timeline>

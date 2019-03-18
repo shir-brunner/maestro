@@ -1,9 +1,10 @@
 const $ = require('jquery');
 const _ = require('lodash');
+const $window = $(window).on('resize', onWindowResize);
+const $content = $('#content').hide();
 
 module.exports = ['$scope', 'audioService', '$interval', function ($scope, audioService, $interval) {
     $scope.audioState = 'loading';
-    $scope.imagesLoaded = false;
 
     let instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(instrumentName => {
@@ -15,7 +16,8 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     });
 
     loadImages().then(() => {
-        $scope.imagesLoaded = true;
+        $content.show();
+        onWindowResize();
         audioService.loadAudio($scope.instruments).then(() => {
             $scope.instruments[0].audioChannel.onEnded = () => $scope.audioState = 'paused';
             $scope.audioState = 'waitingUser';
@@ -39,17 +41,19 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
         curtainAnimating = true;
         let $curtain = $('#curtain');
+        $('#fake-play-button').addClass('pause-button').removeClass('play-button');
         $curtain.animate({ top: $curtain.height() * -1 }, 3500, async () => {
             $curtain.hide();
             await $scope.instruments[0].audioChannel.audioContext.resume();
             $scope.play();
         });
-        $interval(() => {}, 1);
+        $interval(() => {
+        }, 1);
     };
 
     $scope.toggleMuted = instrument => instrument.audioChannel.setMuted(!instrument.audioChannel.muted);
     $scope.play = () => {
-        if($scope.audioState === 'playing')
+        if ($scope.audioState === 'playing')
             return;
 
         $scope.instruments.forEach(instrument => instrument.audioChannel.play());
@@ -57,7 +61,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     };
 
     $scope.pause = () => {
-        if($scope.audioState === 'paused')
+        if ($scope.audioState === 'paused')
             return;
 
         $scope.instruments.forEach(instrument => instrument.audioChannel.pause());
@@ -78,11 +82,11 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
 function loadImages() {
     let $elements = $('#content, #curtain, .play-button, .pause-button, .timeline, .progress, .instrument');
-    let urls = $elements.map(function() {
+    let urls = $elements.map(function () {
         let url = $(this).css('background-image');
         return _.trimEnd(_.trimStart(url, 'url("'), '")');
     }).get();
-    let moreUrls = $('img').map(function() {
+    let moreUrls = $('img').map(function () {
         return $(this).attr('src');
     }).get();
     urls.push(...moreUrls);
@@ -94,5 +98,54 @@ function loadImage(url) {
         let image = new Image();
         image.src = url;
         image.onload = () => resolve();
+    });
+}
+
+function onWindowResize() {
+    let ratio = 1920 / 970;
+    let $content = $('#content');
+    let windowWidth = $window.width();
+    let windowHeight = $window.height();
+
+    $content.css('height', $window.width() / ratio);
+    let contentHeight = $content.height();
+    if(contentHeight > windowHeight) { // landscape
+        contentHeight = windowHeight;
+        $content.css('height', contentHeight);
+        $content.css('width', contentHeight * ratio);
+    } else { // portrait
+        $content.css('width', '100%');
+    }
+
+    $content.css('margin-top', (windowHeight - contentHeight) / 2);
+    $content.css('margin-left', (windowWidth - $content.width()) / 2);
+
+    let contentWidth = $content.width();
+    let scaleX = contentWidth / 1920;
+    let scaleY = contentHeight / 970;
+
+    $('.instrument-container').each(function () {
+        fixPosition($(this), scaleX, scaleY);
+    });
+
+    fixPosition($('#controls'), scaleX, scaleY);
+}
+
+function fixPosition($element, scaleX, scaleY) {
+    let originalX = $element.data('originalX');
+    if(!originalX) {
+        originalX = parseInt($element.css('left'));
+        $element.data('originalX', originalX);
+    }
+    let originalY = $element.data('originalY');
+    if(!originalY) {
+        originalY = parseInt($element.css('top'));
+        $element.data('originalY', originalY);
+    }
+
+    $element.css({
+        'transform': `scale(${scaleX}, ${scaleY})`,
+        'left': (originalX * scaleX) + 'px',
+        'top': (originalY * scaleY) + 'px'
     });
 }
