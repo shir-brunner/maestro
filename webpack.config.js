@@ -54,7 +54,7 @@ module.exports = {
                 loader: "ng-cache-loader?prefix=[dir]/[dir]"
             },
             {
-                test: /.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+                test: /.(otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
                 use: [{
                     loader: 'url-loader',
                     options: {

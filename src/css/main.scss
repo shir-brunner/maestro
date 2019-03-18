@@ -4,7 +4,15 @@
 @import 'vendor/animate';
 @import 'instruments_mobile';
 
+@font-face {
+  font-family: 'passion';
+  font-style: normal;
+  src: url('./fonts/PassionOne-Regular.ttf') format('truetype');
+}
+
 body {
+  font-family: passion;
+  color: white;
   background: black;
 }
 
