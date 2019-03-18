@@ -8927,7 +8927,14 @@ a.text-dark:focus, a.text-dark:hover {
   100% {
     background-position-y: -11656px; } }
 
+@font-face {
+  font-family: 'passion';
+  font-style: normal;
+  src: url(/maestro/dist/src/css/fonts/PassionOne-Regular.ttf) format("truetype"); }
+
 body {
+  font-family: passion;
+  color: white;
   background: black; }
 
 #content {
