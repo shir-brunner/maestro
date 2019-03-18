@@ -24,7 +24,7 @@ app.constant('Config', config);
 
 const $ = require('jquery');
 const $window = $(window).on('resize', onWindowResize);
-setTimeout(() => onWindowResize(), 200);
+setTimeout(() => onWindowResize(), 1000);
 
 function onWindowResize() {
     let ratio = 1920 / 970;

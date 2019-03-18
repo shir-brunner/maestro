@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack-dev-server --port 3000 --host 192.168.14.56",
+    "build": "webpack-dev-server --port 3000 --host 192.168.43.164",
     "build:prod": "webpack"
   },
   "author": "Shir Brunner",
@@ -27,6 +27,7 @@
     "angular-ui-router": "^1.0.20",
     "bluebird": "^3.5.1",
     "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
     "ng-cache-loader": "0.0.26",
     "ng-ui-router-state-events": "^1.0.1"
   }

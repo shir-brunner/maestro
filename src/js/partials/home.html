@@ -1,9 +1,9 @@
-<div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0" class="no-select">
+<div ng-keypress="$event.keyCode === 32 && togglePlayPause()" id="content" tabindex="0" class="no-select" ng-show="imagesLoaded">
     <div id="curtain" ng-click="start()"></div>
     <div>
         <div class="instrument-container {{instrument.name}}" ng-repeat="instrument in instruments"
              ng-click="toggleMuted(instrument)"
-             ng-class="{'muted': instrument.audioChannel.muted || audioState === 'loading'}">
+             ng-class="{'muted': instrument.audioChannel.muted || audioState === 'loading' || audioState === 'waitingUser'}">
             <div class="instrument" ng-class="{'audible': instrument.audioChannel.audible}"></div>
             <div class="spots">
                 <img src="../../img/spot.png" class="spot">
