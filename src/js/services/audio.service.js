@@ -5,7 +5,6 @@ module.exports = [function () {
     let audioService = {};
     audioService.loadAudio = instruments => {
         let audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
         return Promise.map(instruments, instrument => {
             return new Promise(function(resolve, reject) {
                 let request = new XMLHttpRequest();

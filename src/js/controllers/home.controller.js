@@ -39,8 +39,9 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
         curtainAnimating = true;
         let $curtain = $('#curtain');
-        $curtain.animate({ top: $curtain.height() * -1 }, 3500, () => {
+        $curtain.animate({ top: $curtain.height() * -1 }, 3500, async () => {
             $curtain.hide();
+            await $scope.instruments[0].audioChannel.audioContext.resume();
             $scope.play();
         });
         $interval(() => {}, 1);
