@@ -12,9 +12,11 @@ module.exports = class AudioChannel {
         this.startTime = 0;
         this.pauseTime = 0;
         this.currentTime = 0;
+        this.state = 'stopped';
     }
 
     play(currentTime = 0) {
+        this.state = 'playing';
         if (this.sourceNode) {
             this.startTime += (Date.now() - this.pauseTime);
             this.audioContext.resume();
@@ -32,7 +34,8 @@ module.exports = class AudioChannel {
             }
 
             let db = 20 * Math.log(Math.max(max, Math.pow(10, -72 / 20))) / Math.LN10;
-            this.audible = db > -40;
+            if (this.state === 'playing')
+                this.audible = db > -40;
 
             this.currentTime = (Date.now() - this.startTime) / 1000;
             if (this.muted && this.audible && !this.autoPlayed && this.currentTime <= config.autoplaySeconds) {
@@ -57,13 +60,15 @@ module.exports = class AudioChannel {
     }
 
     pause() {
+        this.state = 'paused';
         this.audioContext.suspend();
         this.audible = false;
         this.pauseTime = Date.now();
     }
 
     stop() {
-        if(this.sourceNode) {
+        this.state = 'stopped';
+        if (this.sourceNode) {
             this.sourceNode.disconnect();
             this.sourceNode.stop();
         }

@@ -32,10 +32,11 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         $scope.$apply();
     };
 
+    let curtainAnimating = false;
     $scope.start = () => {
-        if ($scope.audioState !== 'waitingUser')
+        if ($scope.audioState !== 'waitingUser' || curtainAnimating)
             return;
-
+        curtainAnimating = true;
         let $curtain = $('#curtain');
         $curtain.animate({ top: $curtain.height() * -1 }, 3500, () => {
             $curtain.hide();
