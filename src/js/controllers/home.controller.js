@@ -36,23 +36,29 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     $scope.start = () => {
         if ($scope.audioState !== 'waitingUser' || curtainAnimating)
             return;
+
         curtainAnimating = true;
         let $curtain = $('#curtain');
         $curtain.animate({ top: $curtain.height() * -1 }, 3500, () => {
             $curtain.hide();
             $scope.play();
         });
-        $interval(() => {
-        }, 1);
+        $interval(() => {}, 1);
     };
 
     $scope.toggleMuted = instrument => instrument.audioChannel.setMuted(!instrument.audioChannel.muted);
     $scope.play = () => {
+        if($scope.audioState === 'playing')
+            return;
+
         $scope.instruments.forEach(instrument => instrument.audioChannel.play());
         $scope.audioState = 'playing';
     };
 
     $scope.pause = () => {
+        if($scope.audioState === 'paused')
+            return;
+
         $scope.instruments.forEach(instrument => instrument.audioChannel.pause());
         $scope.audioState = 'paused';
     };

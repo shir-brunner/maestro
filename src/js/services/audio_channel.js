@@ -26,6 +26,9 @@ module.exports = class AudioChannel {
         this.gainNode = this.audioContext.createGain();
         this.scriptProcessor = this.audioContext.createScriptProcessor(0, 1, 1);
         this.scriptProcessor.onaudioprocess = e => {
+            if (this.state !== 'playing')
+                return;
+
             let int = e.inputBuffer.getChannelData(0);
 
             let max = 0;
@@ -34,8 +37,7 @@ module.exports = class AudioChannel {
             }
 
             let db = 20 * Math.log(Math.max(max, Math.pow(10, -72 / 20))) / Math.LN10;
-            if (this.state === 'playing')
-                this.audible = db > -40;
+            this.audible = db > -40;
 
             this.currentTime = (Date.now() - this.startTime) / 1000;
             if (this.muted && this.audible && !this.autoPlayed && this.currentTime <= config.autoplaySeconds) {
