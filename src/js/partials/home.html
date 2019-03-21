@@ -23,6 +23,7 @@
             <timeline class="timeline loading" ng-show="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{percentLoaded}}%;"></div>
             </timeline>
+            <div class="duration">{{formatDuration()}}</div>
         </div>
     </div>
 </div>

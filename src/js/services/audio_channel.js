@@ -77,10 +77,10 @@ module.exports = class AudioChannel {
 
         this.sourceNode = null;
 
-        this.scriptProcessor.disconnect();
+        this.scriptProcessor && this.scriptProcessor.disconnect();
         this.scriptProcessor = null;
 
-        this.gainNode.disconnect();
+        this.gainNode && this.gainNode.disconnect();
         this.gainNode = null;
     }
 

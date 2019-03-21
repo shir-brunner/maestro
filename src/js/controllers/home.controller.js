@@ -78,6 +78,17 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         });
         $scope.audioState = 'playing';
     };
+
+    $scope.formatDuration = () => {
+        if($scope.audioState === 'loading')
+            return '00:00';
+
+        let seconds = Math.round($scope.instruments[0].audioChannel.currentTime);
+        let minutes = Math.floor(seconds / 60);
+        seconds -= minutes * 60;
+
+        return `${_.padStart(minutes, 2, '0')}:${_.padStart(seconds, 2, '0')}`;
+    };
 }];
 
 function loadImages() {
@@ -109,7 +120,7 @@ function onWindowResize() {
 
     $content.css('height', $window.width() / ratio);
     let contentHeight = $content.height();
-    if(contentHeight > windowHeight) { // landscape
+    if (contentHeight > windowHeight) { // landscape
         contentHeight = windowHeight;
         $content.css('height', contentHeight);
         $content.css('width', contentHeight * ratio);
@@ -133,12 +144,12 @@ function onWindowResize() {
 
 function fixPosition($element, scaleX, scaleY) {
     let originalX = $element.data('originalX');
-    if(!originalX) {
+    if (!originalX) {
         originalX = parseInt($element.css('left'));
         $element.data('originalX', originalX);
     }
     let originalY = $element.data('originalY');
-    if(!originalY) {
+    if (!originalY) {
         originalY = parseInt($element.css('top'));
         $element.data('originalY', originalY);
     }
