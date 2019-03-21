@@ -25,7 +25,7 @@
             <timeline class="timeline loading" ng-show="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{percentLoaded}}%;"></div>
             </timeline>
-            <div class="current-time">{{formatCurrentTime()}}</div>
+            <div class="current-time">{{hoverCurrentTime || currentTimeFormatted}}</div>
         </div>
     </div>
 </div>

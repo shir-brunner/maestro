@@ -12,6 +12,7 @@ module.exports = function () {
                 dragging = true;
                 scope.pause();
                 $progress.css('width', e.offsetX + 'px');
+                scope.onTimelineMove(e.offsetX / $timeline.width() * 100);
             }).on('mouseup', e => {
                 if(!dragging)
                     return;
@@ -24,7 +25,9 @@ module.exports = function () {
                 if (!dragging)
                     return;
 
-                $progress.css('width', getProgressWidthPercent($progress, $timeline, e) + '%');
+                let percent = getProgressWidthPercent($progress, $timeline, e);
+                $progress.css('width', percent + '%');
+                scope.onTimelineMove(percent);
             }).on('mouseup', e => {
                 if (!dragging)
                     return;

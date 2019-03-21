@@ -89,12 +89,12 @@ body {
     height: 50px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 10px;
+    margin-right: 30px;
   }
 
   .current-time {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 30px;
     font-size: 30px;
     letter-spacing: 5px;
     vertical-align: middle;
@@ -110,20 +110,23 @@ body {
   height: 24.72px;
   background: url('../img/timeline_background.png') no-repeat;
   background-size: 100% 100%;
+  cursor: w-resize;
 
   .progress {
     position: relative;
     height: 100%;
     background: url('../img/timeline_progress.png') no-repeat;
     background-size: auto 100%;
+    overflow: visible;
 
     .marker {
-      width: 10px;
-      height: 100%;
-      background: red;
+      width: 40px;
+      height: 40px;
+      background: url('../img/timeline_marker.png') no-repeat;
+      background-size: 100% 100%;
       position: absolute;
-      right: 0;
-      top: 0;
+      right: -22px;
+      top: -8px;
     }
 
     pointer-events: none;

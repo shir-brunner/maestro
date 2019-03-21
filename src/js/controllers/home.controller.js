@@ -5,6 +5,7 @@ const $content = $('#content').hide();
 
 module.exports = ['$scope', 'audioService', '$interval', function ($scope, audioService, $interval) {
     $scope.audioState = 'loading';
+    $scope.currentTimeFormatted = '00:00';
 
     let instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(instrumentName => {
@@ -48,6 +49,8 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             $scope.play();
         });
         $interval(() => {
+            if ($scope.instruments[0].audioChannel)
+                $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.currentTime);
         }, 1);
     };
 
@@ -70,7 +73,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     $scope.togglePlayPause = () => $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
     $scope.onTimelineChange = percent => {
-        if($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
+        if ($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
             return;
 
         let currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
@@ -80,22 +83,29 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
                 instrument.audioChannel.play();
         });
         $scope.audioState = 'playing';
+
+        $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, currentTime);
+        $scope.hoverCurrentTime = null;
     };
 
-    $scope.formatCurrentTime = () => {
-        if($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
-            return '00:00';
-
-        let seconds = Math.round($scope.instruments[0].audioChannel.currentTime);
-        let minutes = Math.floor(seconds / 60);
-        seconds -= minutes * 60;
-
-        return `${_.padStart(minutes, 2, '0')}:${_.padStart(seconds, 2, '0')}`;
+    $scope.onTimelineMove = percent => {
+        $scope.hoverCurrentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
     };
 }];
 
+function formatCurrentTime(audioState, currentTime) {
+    if (audioState === 'loading' || audioState === 'waitingUser')
+        return '00:00';
+
+    let seconds = Math.round(currentTime);
+    let minutes = Math.floor(seconds / 60);
+    seconds -= minutes * 60;
+
+    return `${_.padStart(minutes, 2, '0')}:${_.padStart(seconds, 2, '0')}`;
+}
+
 function loadImages() {
-    let $elements = $('#content, #curtain, .play-button, .pause-button, .timeline, .progress, .instrument');
+    let $elements = $('#content, #curtain, .play-button, .pause-button, .timeline, .progress, .instrument, .marker');
     let urls = $elements.map(function () {
         let url = $(this).css('background-image');
         return _.trimEnd(_.trimStart(url, 'url("'), '")');
