@@ -94,6 +94,7 @@ module.exports = class AudioChannel {
     setCurrentTime(currentTime) {
         this.stop();
         this.play(currentTime);
+        this.pauseTime = Date.now();
     }
 
     _onEnded() {

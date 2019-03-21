@@ -70,6 +70,9 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
 
     $scope.togglePlayPause = () => $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
     $scope.onTimelineChange = percent => {
+        if($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
+            return;
+
         let currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
         $scope.instruments.forEach(instrument => {
             instrument.audioChannel.setCurrentTime(currentTime);
@@ -80,7 +83,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
     };
 
     $scope.formatDuration = () => {
-        if($scope.audioState === 'loading')
+        if($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
             return '00:00';
 
         let seconds = Math.round($scope.instruments[0].audioChannel.currentTime);
