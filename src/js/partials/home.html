@@ -18,12 +18,14 @@
             <div class="button-placeholder" ng-show="audioState === 'loading'"></div>
             <div class="play-button" id="fake-play-button" ng-show="audioState === 'waitingUser'"></div>
             <timeline class="timeline" ng-hide="audioState === 'loading' || audioState === 'waitingUser'">
-                <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;"></div>
+                <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;">
+                    <div class="marker"></div>
+                </div>
             </timeline>
             <timeline class="timeline loading" ng-show="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{percentLoaded}}%;"></div>
             </timeline>
-            <div class="duration">{{formatDuration()}}</div>
+            <div class="current-time">{{formatCurrentTime()}}</div>
         </div>
     </div>
 </div>

@@ -82,7 +82,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         $scope.audioState = 'playing';
     };
 
-    $scope.formatDuration = () => {
+    $scope.formatCurrentTime = () => {
         if($scope.audioState === 'loading' || $scope.audioState === 'waitingUser')
             return '00:00';
 

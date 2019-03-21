@@ -5,13 +5,13 @@
 @import 'instruments_mobile';
 
 @font-face {
-  font-family: 'passion';
+  font-family: 'sniglet';
   font-style: normal;
-  src: url('./fonts/PassionOne-Regular.ttf') format('truetype');
+  src: url('./fonts/Sniglet-Regular.ttf') format('truetype');
 }
 
 body {
-  font-family: passion;
+  font-family: sniglet;
   color: white;
   background: black;
 }
@@ -92,7 +92,7 @@ body {
     margin-right: 10px;
   }
 
-  .duration {
+  .current-time {
     display: inline-block;
     margin-left: 10px;
     font-size: 30px;
@@ -103,6 +103,7 @@ body {
 }
 
 .timeline {
+  position: relative;
   vertical-align: middle;
   display: inline-block;
   width: 1360px;
@@ -111,9 +112,21 @@ body {
   background-size: 100% 100%;
 
   .progress {
+    position: relative;
     height: 100%;
     background: url('../img/timeline_progress.png') no-repeat;
     background-size: auto 100%;
+
+    .marker {
+      width: 10px;
+      height: 100%;
+      background: red;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    pointer-events: none;
   }
 }
 
