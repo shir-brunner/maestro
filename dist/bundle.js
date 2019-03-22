@@ -58913,64 +58913,11 @@ components.load(app);
 directives.load(app);
 
 app.filter('capitalize', function () {
-    return function (input) {
-        return !!input ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-    };
+  return function (input) {
+    return !!input ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+  };
 });
 app.constant('Config', config);
-
-/*
-const $ = require('jquery');
-const $window = $(window).on('resize', onWindowResize);
-
-function onWindowResize() {
-    let ratio = 1920 / 970;
-    let $content = $('#content');
-    let windowWidth = $window.width();
-    let windowHeight = $window.height();
-
-    $content.css('height', $window.width() / ratio);
-    let contentHeight = $content.height();
-    if(contentHeight > windowHeight) { // landscape
-        contentHeight = windowHeight;
-        $content.css('height', contentHeight);
-        $content.css('width', contentHeight * ratio);
-    } else { // portrait
-        $content.css('width', '100%');
-    }
-
-    $content.css('margin-top', (windowHeight - contentHeight) / 2);
-    $content.css('margin-left', (windowWidth - $content.width()) / 2);
-
-    let contentWidth = $content.width();
-    let scaleX = contentWidth / 1920;
-    let scaleY = contentHeight / 970;
-
-    $('.instrument-container').each(function () {
-        fixPosition($(this), scaleX, scaleY);
-    });
-
-    fixPosition($('#controls'), scaleX, scaleY);
-}
-
-function fixPosition($element, scaleX, scaleY) {
-    let originalX = $element.data('originalX');
-    if(!originalX) {
-        originalX = parseInt($element.css('left'));
-        $element.data('originalX', originalX);
-    }
-    let originalY = $element.data('originalY');
-    if(!originalY) {
-        originalY = parseInt($element.css('top'));
-        $element.data('originalY', originalY);
-    }
-
-    $element.css({
-        'transform': `scale(${scaleX}, ${scaleY})`,
-        'left': (originalX * scaleX) + 'px',
-        'top': (originalY * scaleY) + 'px'
-    });
-}*/
 
 /***/ }),
 /* 110 */
@@ -58988,6 +58935,7 @@ var $content = $('#content').hide();
 
 module.exports = ['$scope', 'audioService', '$interval', function ($scope, audioService, $interval) {
     $scope.audioState = 'loading';
+    $scope.currentTimeFormatted = '00:00';
 
     var instruments = ['vocal1', 'vocal2', 'vocal3', 'acoustic_guitar', 'bass', 'drums', 'electric_guitar', 'strings', 'melodica'];
     $scope.instruments = instruments.map(function (instrumentName) {
@@ -59030,7 +58978,9 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             await $scope.instruments[0].audioChannel.audioContext.resume();
             $scope.play();
         });
-        $interval(function () {}, 1);
+        $interval(function () {
+            if ($scope.instruments[0].audioChannel) $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.currentTime);
+        }, 1);
     };
 
     $scope.toggleMuted = function (instrument) {
@@ -59058,17 +59008,36 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         return $scope.audioState === 'playing' ? $scope.pause() : $scope.play();
     };
     $scope.onTimelineChange = function (percent) {
+        if ($scope.audioState === 'loading' || $scope.audioState === 'waitingUser') return;
+
         var currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
         $scope.instruments.forEach(function (instrument) {
             instrument.audioChannel.setCurrentTime(currentTime);
             if ($scope.audioState !== 'playing') instrument.audioChannel.play();
         });
         $scope.audioState = 'playing';
+
+        $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, currentTime);
+        $scope.hoverCurrentTime = null;
+    };
+
+    $scope.onTimelineMove = function (percent) {
+        $scope.hoverCurrentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
     };
 }];
 
+function formatCurrentTime(audioState, currentTime) {
+    if (audioState === 'loading' || audioState === 'waitingUser') return '00:00';
+
+    var seconds = Math.round(currentTime);
+    var minutes = Math.floor(seconds / 60);
+    seconds -= minutes * 60;
+
+    return _.padStart(minutes, 2, '0') + ':' + _.padStart(seconds, 2, '0');
+}
+
 function loadImages() {
-    var $elements = $('#content, #curtain, .play-button, .pause-button, .timeline, .progress, .instrument');
+    var $elements = $('#content, #curtain, .play-button, .pause-button, .timeline, .progress, .instrument, .marker');
     var urls = $elements.map(function () {
         var url = $(this).css('background-image');
         return _.trimEnd(_.trimStart(url, 'url("'), '")');
@@ -59157,12 +59126,46 @@ module.exports = function () {
         restrict: 'E',
         link: function link(scope, element, attrs) {
             var $timeline = $(element);
-            $timeline.on('click', function (e) {
-                return scope.onTimelineChange(e.offsetX / $timeline.width() * 100);
+            var $progress = $timeline.find('.progress');
+            var dragging = false;
+
+            $timeline.on('mousedown', function (e) {
+                dragging = true;
+                scope.pause();
+                $progress.css('width', e.offsetX + 'px');
+                scope.onTimelineMove(e.offsetX / $timeline.width() * 100);
+            }).on('mouseup', function (e) {
+                if (!dragging) return;
+
+                scope.onTimelineChange(e.offsetX / $timeline.width() * 100);
+                dragging = false;
+            });
+
+            $(document).on('mousemove', function (e) {
+                if (!dragging) return;
+
+                var percent = getProgressWidthPercent($progress, $timeline, e);
+                $progress.css('width', percent + '%');
+                scope.onTimelineMove(percent);
+            }).on('mouseup', function (e) {
+                if (!dragging) return;
+
+                var percent = getProgressWidthPercent($progress, $timeline, e);
+                $progress.css('width', percent + '%');
+
+                scope.onTimelineChange(percent);
+                dragging = false;
             });
         }
     };
 };
+
+function getProgressWidthPercent($progress, $timeline, e) {
+    var x = e.clientX - $timeline.position().left;
+    var width = $timeline[0].getBoundingClientRect().width;
+    var percent = Math.min(x / width * 100, 100);
+    return percent < 0 ? 0 : percent;
+}
 
 /***/ }),
 /* 112 */
@@ -59308,10 +59311,10 @@ module.exports = function () {
 
             this.sourceNode = null;
 
-            this.scriptProcessor.disconnect();
+            this.scriptProcessor && this.scriptProcessor.disconnect();
             this.scriptProcessor = null;
 
-            this.gainNode.disconnect();
+            this.gainNode && this.gainNode.disconnect();
             this.gainNode = null;
         }
     }, {
@@ -59326,6 +59329,8 @@ module.exports = function () {
         value: function setCurrentTime(currentTime) {
             this.stop();
             this.play(currentTime);
+            this.currentTime = currentTime;
+            this.pauseTime = Date.now();
         }
     }, {
         key: '_onEnded',
@@ -59346,7 +59351,7 @@ module.exports = function () {
 var angular=window.angular,ngModule;
 try {ngModule=angular.module(["ng"])}
 catch(e){ngModule=angular.module("ng",[])}
-var v1="<div ng-keypress=\"$event.keyCode === 32 && togglePlayPause()\" id=\"content\" tabindex=\"0\" class=\"no-select\">\n<div id=\"curtain\" ng-click=\"start()\"></div>\n<div>\n<div class=\"instrument-container {{instrument.name}}\" ng-repeat=\"instrument in instruments\" ng-click=\"toggleMuted(instrument)\" ng-class=\"{'muted': instrument.audioChannel.muted || audioState === 'loading' || audioState === 'waitingUser'}\">\n<div class=\"instrument\" ng-class=\"{'audible': instrument.audioChannel.audible}\"></div>\n<div class=\"spots\">\n<img src=\"" + __webpack_require__(67) + "\" class=\"spot\">\n<img src=\"" + __webpack_require__(67) + "\" class=\"spot\">\n</div>\n</div>\n</div>\n<div>\n<div id=\"controls\">\n<div class=\"play-button\" ng-show=\"audioState === 'paused'\" ng-click=\"play()\"></div>\n<div class=\"pause-button\" ng-show=\"audioState === 'playing'\" ng-click=\"pause()\"></div>\n<div class=\"button-placeholder\" ng-show=\"audioState === 'loading'\"></div>\n<div class=\"play-button\" id=\"fake-play-button\" ng-show=\"audioState === 'waitingUser'\"></div>\n<timeline class=\"timeline\" ng-hide=\"audioState === 'loading' || audioState === 'waitingUser'\">\n<div class=\"progress\" style=\"width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;\"></div>\n</timeline>\n<timeline class=\"timeline loading\" ng-show=\"audioState === 'loading' || audioState === 'waitingUser'\">\n<div class=\"progress\" style=\"width: {{percentLoaded}}%;\"></div>\n</timeline>\n</div>\n</div>\n</div>";
+var v1="<div ng-keypress=\"$event.keyCode === 32 && togglePlayPause()\" id=\"content\" tabindex=\"0\" class=\"no-select\">\n<div id=\"curtain\" ng-click=\"start()\"></div>\n<div>\n<div class=\"instrument-container {{instrument.name}}\" ng-repeat=\"instrument in instruments\" ng-click=\"toggleMuted(instrument)\" ng-class=\"{'muted': instrument.audioChannel.muted || audioState === 'loading' || audioState === 'waitingUser'}\">\n<div class=\"instrument\" ng-class=\"{'audible': instrument.audioChannel.audible}\"></div>\n<div class=\"spots\">\n<img src=\"" + __webpack_require__(67) + "\" class=\"spot\">\n<img src=\"" + __webpack_require__(67) + "\" class=\"spot\">\n</div>\n</div>\n</div>\n<div>\n<div id=\"controls\">\n<div class=\"play-button\" ng-show=\"audioState === 'paused'\" ng-click=\"play()\"></div>\n<div class=\"pause-button\" ng-show=\"audioState === 'playing'\" ng-click=\"pause()\"></div>\n<div class=\"button-placeholder\" ng-show=\"audioState === 'loading'\"></div>\n<div class=\"play-button\" id=\"fake-play-button\" ng-show=\"audioState === 'waitingUser'\"></div>\n<timeline class=\"timeline\" ng-hide=\"audioState === 'loading' || audioState === 'waitingUser'\">\n<div class=\"progress\" style=\"width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;\">\n<div class=\"marker\"></div>\n</div>\n</timeline>\n<timeline class=\"timeline loading\" ng-show=\"audioState === 'loading' || audioState === 'waitingUser'\">\n<div class=\"progress\" style=\"width: {{percentLoaded}}%;\"></div>\n</timeline>\n<div class=\"current-time\">{{hoverCurrentTime || currentTimeFormatted}}</div>\n</div>\n</div>\n</div>";
 var id1="js/partials/home.html";
 var inj=angular.element(window.document).injector();
 if(inj){inj.get("$templateCache").put(id1,v1);}

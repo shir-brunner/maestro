@@ -8928,12 +8928,12 @@ a.text-dark:focus, a.text-dark:hover {
     background-position-y: -11656px; } }
 
 @font-face {
-  font-family: 'passion';
+  font-family: 'sniglet';
   font-style: normal;
-  src: url(/maestro/dist/src/css/fonts/PassionOne-Regular.ttf) format("truetype"); }
+  src: url(/maestro/dist/src/css/fonts/Sniglet-Regular.ttf) format("truetype"); }
 
 body {
-  font-family: passion;
+  font-family: sniglet;
   color: white;
   background: black; }
 
@@ -8990,19 +8990,39 @@ body {
     height: 50px;
     display: inline-block;
     vertical-align: middle;
-    margin-right: 10px; }
+    margin-right: 30px; }
+  #controls .current-time {
+    display: inline-block;
+    margin-left: 30px;
+    font-size: 30px;
+    letter-spacing: 5px;
+    vertical-align: middle;
+    width: 90px; }
 
 .timeline {
+  position: relative;
   vertical-align: middle;
   display: inline-block;
   width: 1360px;
   height: 24.72px;
   background: url(/maestro/dist/src/img/timeline_background.png) no-repeat;
-  background-size: 100% 100%; }
+  background-size: 100% 100%;
+  cursor: w-resize; }
   .timeline .progress {
+    position: relative;
     height: 100%;
     background: url(/maestro/dist/src/img/timeline_progress.png) no-repeat;
-    background-size: auto 100%; }
+    background-size: auto 100%;
+    overflow: visible;
+    pointer-events: none; }
+    .timeline .progress .marker {
+      width: 40px;
+      height: 40px;
+      background: url(/maestro/dist/src/img/timeline_marker.png) no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      right: -22px;
+      top: -8px; }
 
 .timeline.loading {
   background: url(/maestro/dist/src/img/loading_background.png) no-repeat; }
