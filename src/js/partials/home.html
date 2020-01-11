@@ -22,6 +22,7 @@
                 <div class="progress" style="width: {{instruments[0].audioChannel.currentTime / instruments[0].audioChannel.buffer.duration * 100}}%;">
                     <div class="marker"></div>
                 </div>
+                <div style="height: 20px;"></div>
             </timeline>
             <timeline class="timeline loading" ng-show="audioState === 'loading' || audioState === 'waitingUser'">
                 <div class="progress" style="width: {{percentLoaded}}%;"></div>
