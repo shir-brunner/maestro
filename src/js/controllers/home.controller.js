@@ -85,16 +85,25 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         $scope.audioState = 'playing';
 
         $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, currentTime);
-        $scope.hoverCurrentTime = null;
+        $scope.seekCurrentTime = null;
+        $('#hover-time').hide();
     };
 
-    $scope.onTimelineMove = percent => {
-        $scope.hoverCurrentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
+    $scope.onTimelineSeek = percent => {
+        $scope.seekCurrentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
+        setHoverTime($scope, percent);
     };
+
+
+    $scope.onTimelineHover = percent => {
+        setHoverTime($scope, percent);
+    };
+
+    $scope.onTimelineMouseLeave = () => $('#hover-time').hide();
 }];
 
 function formatCurrentTime(audioState, currentTime) {
-    if (audioState === 'loading' || audioState === 'waitingUser')
+    if (audioState === 'loading' || audioState === 'waitingUser' || currentTime <= 0)
         return '00:00';
 
     let seconds = Math.round(currentTime);
@@ -102,6 +111,16 @@ function formatCurrentTime(audioState, currentTime) {
     seconds -= minutes * 60;
 
     return `${_.padStart(minutes, 2, '0')}:${_.padStart(seconds, 2, '0')}`;
+}
+
+function setHoverTime($scope, percent) {
+    let currentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
+    let $hoverTime = $('#hover-time');
+
+    $hoverTime
+        .html(currentTime)
+        .css('left', 'calc(' + percent + '% - ' + ($hoverTime.width() / 2) + 'px)')
+        .show();
 }
 
 function loadImages() {

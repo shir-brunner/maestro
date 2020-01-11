@@ -11,8 +11,9 @@ module.exports = function () {
             let $content = $('#content');
             let dragging = false;
             let lastTouchEvent = null;
+            let isHovering = false;
 
-            if(_.get(browser, 'parsedResult.platform.type') === 'mobile') {
+            if (_.get(browser, 'parsedResult.platform.type') === 'mobile') {
                 $timeline.on('touchstart', e => {
                     dragging = true;
                     scope.pause();
@@ -20,7 +21,7 @@ module.exports = function () {
                     let offsetX = e.touches.item(0).clientX - $timeline.position().left - contentMarginLeft;
                     let percent = offsetX / $timeline[0].getBoundingClientRect().width * 100;
                     $progress.css('width', percent + '%');
-                    scope.onTimelineMove(percent);
+                    scope.onTimelineSeek(percent);
                     lastTouchEvent = e;
                 }).on('touchend', e => {
                     if (!dragging)
@@ -40,15 +41,27 @@ module.exports = function () {
 
                     let percent = getProgressWidthPercent($progress, $timeline, e, $content);
                     $progress.css('width', percent + '%');
-                    scope.onTimelineMove(percent);
+                    scope.onTimelineSeek(percent);
                 });
-            } else {
+            } else { // desktop
                 $timeline.on('mousedown', e => {
                     dragging = true;
                     scope.pause();
                     $progress.css('width', e.offsetX + 'px');
-                    scope.onTimelineMove(e.offsetX / $timeline.width() * 100);
+                    scope.onTimelineSeek(e.offsetX / $timeline.width() * 100);
                     lastTouchEvent = e;
+                }).on('mousemove', e => {
+                    if (dragging)
+                        return;
+
+                    if(!$(e.target).hasClass('timeline')) {
+                        scope.onTimelineMouseLeave();
+                        return;
+                    }
+
+                    scope.onTimelineHover(e.offsetX / $timeline.width() * 100);
+                }).on('mouseleave', e => {
+                    scope.onTimelineMouseLeave();
                 }).on('mouseup', e => {
                     if (!dragging)
                         return;
@@ -64,7 +77,7 @@ module.exports = function () {
 
                     let percent = getProgressWidthPercent($progress, $timeline, e, $content);
                     $progress.css('width', percent + '%');
-                    scope.onTimelineMove(percent);
+                    scope.onTimelineSeek(percent);
                 }).on('mouseup', e => {
                     if (!dragging)
                         return;
