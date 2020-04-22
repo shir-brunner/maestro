@@ -11,7 +11,6 @@ module.exports = function () {
             let $content = $('#content');
             let dragging = false;
             let lastTouchEvent = null;
-            let isHovering = false;
 
             if (_.get(browser, 'parsedResult.platform.type') === 'mobile') {
                 $timeline.on('touchstart', e => {

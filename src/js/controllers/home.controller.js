@@ -22,16 +22,13 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         audioService.loadAudio($scope.instruments).then(() => {
             $scope.instruments[0].audioChannel.onEnded = () => $scope.audioState = 'paused';
             $scope.audioState = 'waitingUser';
+            $scope.$apply();
         });
     });
 
     $scope.percentLoaded = 0;
     audioService.onProgress = percentLoaded => {
         $scope.percentLoaded = percentLoaded;
-        if (percentLoaded >= 100) {
-            $scope.audioState = 'waitingUser';
-        }
-
         $scope.$apply();
     };
 
@@ -77,11 +74,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             return;
 
         let currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
-        $scope.instruments.forEach(instrument => {
-            instrument.audioChannel.setCurrentTime(currentTime);
-            if ($scope.audioState !== 'playing')
-                instrument.audioChannel.play();
-        });
+        $scope.instruments.forEach(instrument => instrument.audioChannel.setCurrentTime(currentTime));
         $scope.audioState = 'playing';
 
         $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, currentTime);
@@ -93,7 +86,6 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         $scope.seekCurrentTime = formatCurrentTime($scope.audioState, $scope.instruments[0].audioChannel.buffer.duration / 100 * percent);
         setHoverTime($scope, percent);
     };
-
 
     $scope.onTimelineHover = percent => {
         setHoverTime($scope, percent);
