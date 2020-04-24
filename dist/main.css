@@ -9004,9 +9004,13 @@ body {
   vertical-align: middle;
   display: inline-block;
   width: 1360px;
-  height: 24.72px;
+  height: 49.72px;
+  top: -25px;
+  padding-top: 25px;
+  margin-top: 25px;
   background: url(/maestro/dist/src/img/timeline_background.png) no-repeat;
   background-size: 100% 100%;
+  background-origin: content-box;
   cursor: w-resize; }
   .timeline .progress {
     position: relative;
@@ -9025,10 +9029,12 @@ body {
       top: -8px; }
 
 .timeline.loading {
-  background: url(/maestro/dist/src/img/loading_background.png) no-repeat; }
+  background: url(/maestro/dist/src/img/loading_background.png) no-repeat;
+  background-origin: content-box; }
   .timeline.loading .progress {
     background: url(/maestro/dist/src/img/timeline_background.png) no-repeat;
-    background-size: auto 100%; }
+    background-size: auto 100%;
+    background-origin: content-box; }
 
 #curtain {
   position: absolute;
@@ -9047,3 +9053,8 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none; }
+
+#hover-time {
+  position: absolute;
+  top: -14px;
+  font-size: 22px; }
