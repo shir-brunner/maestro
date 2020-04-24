@@ -90,9 +90,7 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
         setHoverTime($scope, percent);
     };
 
-    $scope.onTimelineHover = percent => {
-        setHoverTime($scope, percent);
-    };
+    $scope.onTimelineHover = percent => setHoverTime($scope, percent);
 
     $scope.onTimelineMouseLeave = () => $('#hover-time').hide();
 }];
