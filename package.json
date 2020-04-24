@@ -30,6 +30,7 @@
     "jquery": "^3.3.1",
     "lodash": "^4.17.11",
     "ng-cache-loader": "0.0.26",
-    "ng-ui-router-state-events": "^1.0.1"
+    "ng-ui-router-state-events": "^1.0.1",
+    "volume-meter": "^2.0.1"
   }
 }

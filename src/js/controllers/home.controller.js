@@ -74,7 +74,10 @@ module.exports = ['$scope', 'audioService', '$interval', function ($scope, audio
             return;
 
         let currentTime = $scope.instruments[0].audioChannel.buffer.duration / 100 * percent;
-        $scope.instruments.forEach(instrument => instrument.audioChannel.setCurrentTime(currentTime));
+        $scope.instruments.forEach(instrument => {
+            instrument.audioChannel.play(); // this is important because timeline mousedown set the state to PAUSED
+            instrument.audioChannel.setCurrentTime(currentTime);
+        });
         $scope.audioState = 'playing';
 
         $scope.currentTimeFormatted = formatCurrentTime($scope.audioState, currentTime);
